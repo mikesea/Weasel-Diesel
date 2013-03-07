@@ -71,7 +71,9 @@ module WSList
   def find(verb, url)
     verb = verb.to_s.downcase.to_sym
     slashed_url = url.start_with?('/') ? url : "/#{url}"
-    @list.find{|service| service.verb == verb && service.url == slashed_url}
+    @list.find do |service|
+      service.verb == verb && service.url =~ /#{slashed_url}(\/\?)?$/
+    end
   end
   
   
