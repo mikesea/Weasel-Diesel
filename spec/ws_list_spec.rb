@@ -26,12 +26,21 @@ describe WSList do
     service.url.should == "/slash/foo"
   end
 
+  it "finds service with or without the trailing slash" do
+    service = WSList.find(:get, 'trailing_slash')
+    service.should_not be_nil
+    service.url.should == "/trailing_slash/?"
+
+    service = WSList.find(:get, 'trailing_slash/?')
+    service.should_not be_nil
+    service.url.should == "/trailing_slash/?"
+  end
+
   it "finds the root service" do
     service = WSList.find(:get, '/')
     service.should_not be_nil
     service.extra["name"].should == "root"
   end
-
 
   it "raises an exception if a duplicate service is added" do
     lambda{ WSList.add(WeaselDiesel.new("/")) }.should raise_exception(WSList::DuplicateServiceDescription)

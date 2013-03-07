@@ -132,6 +132,10 @@ describe_service "/slash/foo" do |service|
   service.formats :json
 end
 
+describe_service "trailing_slash/?" do |service|
+  service.formats :json
+end
+
 describe_service "/" do |service|
   service.extra["name"] = "root"
 end
